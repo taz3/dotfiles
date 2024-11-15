@@ -1,0 +1,29 @@
+#!/bin/bash
+
+riverctl keyboard-layout us
+
+$HOME/.config/river/keybinds.sh
+
+pkill swww-daemon
+pkill dunst
+pkill yambar
+
+dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river
+
+riverctl spawn dunst
+riverctl spawn wl-clipboard
+riverctl spawn swww-daemon
+riverctl spawn yambar
+
+riverctl default-layout wideriver
+riverctl spawn "wideriver \
+  --layout left \
+  --stack dwindle \
+  --count 1 --ratio 0.55 \
+  --inner-gaps 10 --border-width 5 --outer-gaps 10 \
+  --border-color-focused 0xe5c185 \
+  --border-color-unfocused 0xb8cdab"
+
+swww img $HOME/Pictures/wall/soul_eater_board.jpg
+
+$HOME/.config/river/display.sh
